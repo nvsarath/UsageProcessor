@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Random;
 class UsageFileCreator { 
 	public static void main(String args[]) throws Exception { 
-		File f=new File("C:\\Users\\Administrator\\workspace\\UsageProject\\input\\test_20151101_Part1.txt");
+		File f=new File("C:\\Users\\Administrator\\workspace\\UsageProject\\input\\test_20151102_Part1.txt");
 
 		int customerId =100;
 		int usage = 0;
