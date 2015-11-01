@@ -204,8 +204,7 @@ public class MultiThreadedProcessor implements Runnable {
 						customerId = splitteer[0];
 						currentUsage = splitteer[1];
 						siteName = splitteer[2];
-						startDateTime = splitteer[3];
-						endDateTime = splitteer[4];
+
 						IMap<Object, Object> imap = client.getMap("customers");
 						Map custObj= (Map)imap.get(customerId);
 					//	Map custObj=HazelCastClientUtil.getCustomerObj(customerId);
@@ -215,13 +214,13 @@ public class MultiThreadedProcessor implements Runnable {
 							custDateUsageMap =custObj;
 							
 							
-							if(!excludeSites.contains(siteName) && !notInExcludedTime(startDateTime,endDateTime,excludeTimes)) {
+							if(!excludeSites.contains(siteName)) {
 								if(custDateUsageMap.containsKey(fileName)){
 									//JSONArray objArr = (JSONArray) custDateUsageMap.get(fileName);
 									//existingUsage = objArr.getString(0);
 									existingUsage = (String) custDateUsageMap.get(fileName);
 									accumilatedUsage = Integer.parseInt(existingUsage) + Integer.parseInt(currentUsage);
-									if(accumilatedUsage > 200) {
+									if(accumilatedUsage > 2000) {
 										writeForAlert(customerId,accumilatedUsage);
 									}
 									custDateUsageMap.remove(fileName);
@@ -267,15 +266,18 @@ public class MultiThreadedProcessor implements Runnable {
 
 
 	
-	private boolean notInExcludedTime(String startDateTime, String endDateTime,
+	private boolean isUsageInExcludedTime(String startDateTime, String endDateTime,
 			ArrayList<String> excludeTimes) {
 		long startTimeInMillis = new Date(startDateTime).getTime();
 		long endTimeInMillis = new Date(endDateTime).getTime();
+		System.out.println(startTimeInMillis + "    " + endTimeInMillis);
 		for(int i=0;i<excludeTimes.size();i++) {
 			String[] splitter = excludeTimes.get(i).split(",");
 			long excludeStartTime = Long.valueOf(splitter[0]).longValue();
 			long excludeEndTime = Long.valueOf(splitter[1]).longValue();
-			if(startTimeInMillis > excludeStartTime && endTimeInMillis > excludeEndTime){
+			System.out.println(excludeStartTime + "  exclude  " + excludeEndTime);
+
+			if(startTimeInMillis > excludeStartTime && endTimeInMillis < excludeEndTime){
 				return true;
 			}
 		}
@@ -298,7 +300,7 @@ public class MultiThreadedProcessor implements Runnable {
 	}
 
 	private void writeForAlert(String customerId, int accumilatedUsage) {
-		// TODO Auto-generated method stub
+		SendSms.sendMessageToDataUsers(customerId,accumilatedUsage);
 
 	}
 }

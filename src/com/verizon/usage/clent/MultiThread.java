@@ -95,7 +95,7 @@ public class MultiThread {
 	
 	private void ShutdownAndAwaitTermination(ExecutorService service) {
 		service.shutdown();
-		int timeOut=60;
+		int timeOut=300;
 		System.out.println("shutdown the service");
 		try{
 			

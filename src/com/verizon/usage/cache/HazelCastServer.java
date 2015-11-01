@@ -17,12 +17,12 @@ public class HazelCastServer {
         HazelcastInstance instance = Hazelcast.newHazelcastInstance(cfg);
         
         Map<Integer, String> customerMap = instance.getMap("customers");
-        customerMap.put(1, "Bangalore");
-        customerMap.put(2, "Chennai");
-        customerMap.put(3, "Hyderabad");
-        //customerMap.clear();
+        //customerMap.put(1, "Bangalore");
+        //customerMap.put(2, "Chennai");
+        //customerMap.put(3, "Hyderabad");
+        customerMap.clear();
         System.out.println("Map before  Size:" + customerMap.size()); 
-      //  customerMap.clear();
+        customerMap.clear();
         System.out.println("Map after clear Size:" + customerMap.size()); 
     }
     

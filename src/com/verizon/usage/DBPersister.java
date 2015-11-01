@@ -79,4 +79,35 @@ public class DBPersister {
 		System.exit(0);
 	}
 
+	
+	public static void loadingDataIntoCasandra() {
+		// TODO Auto-generated method stub
+		DBPersister obj = new DBPersister ();
+		obj.createSession();
+	//	HazelCastClientUtil util = new HazelCastClientUtil();
+		HazelcastInstance client = HazelCastClientUtil.getClient();
+		IMap<Object, Object> imap = client.getMap("customers");
+		Iterator custItr = imap.keySet().iterator();
+		
+		while(custItr.hasNext()) {
+			String customrId = String.valueOf(custItr.next());
+			Map<String, String> custObj= (Map)imap.get(customrId);
+			System.out.println("after getting cust obj");
+			if (custObj != null && !custObj.isEmpty()){
+				Iterator<Map.Entry<String, String>> it = custObj.entrySet().iterator();
+				while ( it.hasNext()) {
+					Map.Entry<String, String> entry = (Map.Entry<String, String>) it.next();
+				    String key = entry.getKey();
+				    String value = entry.getValue();
+				    System.out.println("key "+key +" value "+value);
+				    obj.populateData(customrId,value,key);
+				}
+			}else{
+				System.out.println("cust not found");
+			}			
+		}
+	
+	}
+
+	
 }

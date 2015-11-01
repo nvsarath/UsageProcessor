@@ -89,8 +89,8 @@ public class UsageFileProcessor {
 					}
 					//   	public static Map getCustomerObj(String customerId) {
 
-					System.out.println(HazelCastClientUtil.getCustomerObj("100"));
-					
+					System.out.println("Usage for 100" + HazelCastClientUtil.getCustomerObj("100"));
+					System.out.println("Usage for 101" + HazelCastClientUtil.getCustomerObj("101"));
 					//System.out.println(custDateUsageMap);
 				}
 		} catch (Exception e) {

@@ -16,14 +16,18 @@
 	">
 
     <bean id="runScheduler" class="com.verizon.taskscheduler.TaskSchudeler" />
-
+ 	<bean id="dailyRunScheduler" class="com.verizon.usage.JobSheduler" />
 	<task:annotation-driven/>
   <!-- Run every 5 seconds -->
   <task:scheduled-tasks>
     <!-- 
 	<task:scheduled ref="runScheduler" method="run" fixed-delay="5000" /> 
     -->
-	<task:scheduled ref="runScheduler" method="run" cron="*/1 * * * * *" />
+	<task:scheduled ref="runScheduler" method="run" cron="*/600 * * * * *" />
+	
+	
+	
+	<task:scheduled ref="dailyRunScheduler" method="run" cron="*/86400 * * * * *" />
    </task:scheduled-tasks>
 
 </beans>

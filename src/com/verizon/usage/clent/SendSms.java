@@ -6,9 +6,11 @@ import java.io.*;
 
 public  class SendSms
  {
-	public static void sendMessageToDataUsers(String limit) {
+	public static void sendMessageToDataUsers(String CustomerId, int limit) {
 		try {
-			String recipient = "918125548807";//CusomerNo
+			if(true)
+				return;
+			String recipient = CustomerId;//CusomerNo
 			String message = "Hello Customer"
 					+ "Reached the "+limit+" DataUsuage";
 			String username = "admin";
